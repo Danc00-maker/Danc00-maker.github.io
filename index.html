@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La economía de la atención y la desinformación | CTS – Tema 3</title>
+<meta name="description" content="Trabajo de Ciencia, Tecnología y Sociedad: algoritmos de recomendación, IA generativa y desinformación en las elecciones argentinas de 2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#inicio">Atención y algoritmos</a>
+  <nav aria-label="Secciones">
+    <a href="#feed">Probá el feed</a>
+    <a href="#como">Cómo funciona</a>
+    <a href="#caso">Caso 2025</a>
+    <a href="#etica">Ética</a>
+    <a href="#propuestas">Propuestas</a>
+    <a href="#fuentes">Fuentes</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <h1>Un algoritmo no sabe qué es verdad. Sabe qué te hace reaccionar.</h1>
+  <p class="lead">Las plataformas ordenan lo que vemos para maximizar la interacción. Con la IA generativa, fabricar contenido falso pero creíble casi no cuesta nada. Esta página resume nuestro trabajo sobre cómo esa combinación afecta la opinión pública y las elecciones en Argentina.</p>
+</section>
+
+<section id="feed" class="demo" aria-labelledby="feed-t">
+  <h2 id="feed-t">Armá tu propio feed</h2>
+  <p>Un recomendador ordena las publicaciones según un puntaje. Movés el control y decidís qué pesa más: la interacción que genera cada publicación o que esté verificada. Las publicaciones son ejemplos ficticios y el modelo es una simplificación didáctica.</p>
+  <div class="control">
+    <label for="peso">Qué optimiza el feed</label>
+    <div class="slider-row">
+      <span>Solo interacción</span>
+      <input type="range" id="peso" min="0" max="100" value="0" aria-describedby="peso-val">
+      <span>Solo verificación</span>
+    </div>
+    <p id="peso-val" class="small"></p>
+  </div>
+  <div class="demo-grid">
+    <ol id="lista" class="feed" aria-live="polite"></ol>
+    <aside class="meter" aria-live="polite">
+      <p class="small">Entre las 4 primeras publicaciones</p>
+      <p class="big" id="m-falso">0</p>
+      <p>sin verificar</p>
+      <p class="small" id="m-texto"></p>
+    </aside>
+  </div>
+  <p class="small">Puntaje = peso × interacción + (1 − peso) × verificación. Con el control a la izquierda, el sistema hace lo que suelen hacer las funciones de recompensa basadas en clics: premia lo que más reacciones provoca.</p>
+</section>
+
+<section id="como">
+  <h2>Cómo funciona un recomendador</h2>
+  <p>Un sistema clásico orientado a retención sigue cuatro etapas y se repite en cada sesión.</p>
+  <ol class="steps">
+    <li><strong>Recolecta señales.</strong> Clics, tiempo de permanencia, reacciones y compartidos.</li>
+    <li><strong>Genera candidatos.</strong> De millones de publicaciones elige las parecidas a tu historial y al de usuarios similares.</li>
+    <li><strong>Ordena.</strong> Un modelo predice la probabilidad de que reacciones y arma el ranking.</li>
+    <li><strong>Aprende de vos.</strong> Lo que hacés con lo que te muestran vuelve como dato de entrenamiento.</li>
+  </ol>
+  <div class="two">
+    <div>
+      <h3>Por qué lo falso se propaga</h3>
+      <p>En Twitter, las noticias falsas llegaron más lejos y más rápido que las verdaderas. La diferencia se debió sobre todo a las personas y no a los bots, porque lo falso es más novedoso y despierta más emoción (Vosoughi et al., 2018). El lenguaje moral y emocional también aumenta la difusión (Brady et al., 2017).</p>
+    </div>
+    <div>
+      <h3>Burbujas y cámaras de eco</h3>
+      <p>La personalización refuerza el sesgo de confirmación. Pero el algoritmo no actúa solo: en Facebook, lo que cada persona elige leer también limita su exposición a ideas contrarias (Bakshy et al., 2015).</p>
+    </div>
+  </div>
+</section>
+
+<section id="caso">
+  <h2>Caso: videos con IA en las elecciones argentinas de 2025</h2>
+  <ol class="timeline">
+    <li>
+      <h3>18 de mayo · Ciudad de Buenos Aires</h3>
+      <p>En las horas previas a la votación circuló en X un video falso de Mauricio Macri en el que parecía retirar la candidatura de Silvia Lospennato para apoyar a Manuel Adorni. El Tribunal Electoral porteño ordenó eliminarlo.</p>
+    </li>
+    <li>
+      <h3>7 de septiembre · Provincia de Buenos Aires</h3>
+      <p>Antes de los comicios circularon dos videos editados con IA en los que Javier Milei y Axel Kicillof parecían hablar en contra de sus propios gobiernos.</p>
+    </li>
+    <li>
+      <h3>26 de octubre · Elecciones nacionales</h3>
+      <p>En plena veda apareció un video de Jorge Taiana anunciando que bajaba su candidatura. Chequeado lo desmintió y la Cámara Nacional Electoral confirmó que la oferta seguía vigente. También circuló un video de Macri llamando a votar a Provincias Unidas, armado a partir de un spot de 2015.</p>
+    </li>
+  </ol>
+  <p class="stat"><strong>Más de 360</strong> denuncias llegaron a la Justicia electoral durante las legislativas de 2025; <strong>31</strong> se vincularon con los videos de Taiana y Macri (Chequeado, 2025).</p>
+  <div class="note">
+    <p>Los casos alcanzaron a dirigentes de distintos espacios. La autoría fue materia de investigación judicial y no corresponde darla por probada. Tampoco puede medirse cuánto influyeron estos videos en los votos. Lo que sí muestra el caso es que las respuestas (órdenes judiciales y verificación periodística) llegaron después de la circulación. Según estudios jurídicos, Argentina todavía no tiene un delito específico para los deepfakes.</p>
+  </div>
+</section>
+
+<section id="etica">
+  <h2>Dimensión ética en ciencia de datos</h2>
+  <p>Optimizar clics o tiempo de permanencia parece una decisión técnica neutral, pero implica un juicio de valor: decide que lo que retiene es lo que vale. Cuando la métrica no distingue entre un contenido informativo y uno engañoso, el sistema puede amplificar lo segundo como efecto colateral. Cathy O’Neil llama “armas de destrucción matemática” a los modelos opacos, masivos y dañinos.</p>
+  <ul class="checks">
+    <li>Documentar qué se optimiza y qué efectos secundarios se evaluaron.</li>
+    <li>Incluir calidad y diversidad informativa como objetivo o restricción.</li>
+    <li>Auditar el modelo antes y después de desplegarlo, sobre todo en períodos electorales.</li>
+    <li>Advertir y escalar los riesgos detectados: la responsabilidad es compartida, aunque no total.</li>
+  </ul>
+  <p>Las plataformas también invierten menos moderación y verificación en idiomas y regiones periféricas (<em>moderation gap</em>), de modo que los costos de un diseño pensado para otros mercados recaen sobre la región.</p>
+</section>
+
+<section id="propuestas">
+  <h2>Propuestas de mitigación</h2>
+  <p>Ninguna medida alcanza por sí sola. Proponemos capas que no vulneren la libertad de expresión.</p>
+  <dl class="props">
+    <dt>Diseño responsable</dt><dd>Funciones objetivo con calidad informativa y fricciones antes de compartir contenido no verificado en elecciones.</dd>
+    <dt>Transparencia y auditoría</dt><dd>Acceso de investigadores independientes e informes de riesgos, en línea con las guías de la UNESCO (2023).</dd>
+    <dt>Trazabilidad</dt><dd>Etiquetado, marcas de agua y metadatos de procedencia como C2PA. Ayudan, pero pueden eliminarse y los detectores fallan.</dd>
+    <dt>Marco legal proporcional</dt><dd>Tipificar la suplantación con IA con fines electorales, con criterios de intención y daño que no alcancen la sátira.</dd>
+    <dt>Alfabetización y verificación</dt><dd>Fortalecer iniciativas como Chequeado y Reverso y la lectura crítica de contenido digital.</dd>
+  </dl>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul class="refs">
+    <li>Bakshy, E., Messing, S., &amp; Adamic, L. A. (2015). Exposure to ideologically diverse news and opinion on Facebook. <em>Science, 348</em>(6239), 1130–1132.</li>
+    <li>Brady, W. J., Wills, J. A., Jost, J. T., Tucker, J. A., &amp; Van Bavel, J. J. (2017). Emotion shapes the diffusion of moralized content in social media. <em>PNAS, 114</em>(28), 7313–7318.</li>
+    <li>Chequeado. (2025). <a href="https://chequeado.com/ultimas-noticias/los-videos-falsos-de-politicos-hechos-con-ia-fueron-protagonistas-en-las-elecciones-2025/">Los videos falsos de políticos hechos con IA fueron protagonistas en las elecciones 2025</a>.</li>
+    <li>Chequeado. (2025, 26 de octubre). <a href="https://chequeado.com/ultimas-noticias/no-este-video-donde-jorge-taiana-supuestamente-dice-que-se-dio-de-baja-de-la-candidatura-a-diputado-nacional-no-es-real-esta-hecho-con-ia/">No, este video donde Jorge Taiana dice que dio de baja su candidatura a diputado no es real</a>.</li>
+    <li>Forbes Argentina. (2025, 18 de mayo). <a href="https://www.forbesargentina.com/today/deepfake-electoral-falso-video-denuncia-pro-orden-justicia-x-macri-esta-hecho-lloron-milei-n72431">Deepfake electoral: el falso video, la denuncia del PRO, la orden de la Justicia a X</a>.</li>
+    <li>La Nación. (2025, 26 de octubre). <a href="https://www.lanacion.com.ar/politica/elecciones-legislativas-mauricio-macri-otra-vez-victima-de-un-video-electoral-hecho-con-ia-nid26102025">Elecciones legislativas: Mauricio Macri, otra vez víctima de un video electoral hecho con IA</a>.</li>
+    <li>O’Neil, C. (2018). <em>Armas de destrucción matemática</em>. Capitán Swing.</li>
+    <li>UNESCO. (2023). <em>Guidelines for the governance of digital platforms</em>.</li>
+    <li>Vosoughi, S., Roy, D., &amp; Aral, S. (2018). The spread of true and false news online. <em>Science, 359</em>(6380), 1146–1151.</li>
+    <li>Zuboff, S. (2019). <em>The age of surveillance capitalism</em>. PublicAffairs.</li>
+  </ul>
+</section>
+</main>
+
+<footer>
+  <p>Ciencia, Tecnología y Sociedad · Tema 3: IA, algoritmos de recomendación y desinformación</p>
+  <p>Casco Ariel · Casco Luis · Casco Daniel</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
