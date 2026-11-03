@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<canvas id="bg" aria-hidden="true"></canvas>
 <div class="progress" id="progress" aria-hidden="true"></div>
+<button type="button" id="bgtoggle" class="bgtoggle" aria-pressed="false">Pausar fondo</button>
 <header class="top">
   <a class="brand" href="#inicio">Atención y algoritmos</a>
   <nav aria-label="Secciones" id="nav">
@@ -114,7 +116,7 @@
   </ul>
 </section>
 </main>
-<footer><p>Ciencia, Tecnología y Sociedad · Tema 3: IA, algoritmos de recomendación y desinformación</p><p>Casco Ariel · Casco Luis · Casco Daniel</p></footer>
+<footer><p class="small">Fondo: simulación ilustrativa de cómo se propaga un contenido en una red. El naranja representa un bulo y el verde, una información verificada; el bulo se expande más rápido, en línea con lo que encontraron Vosoughi et al. (2018). Hacé clic en un espacio vacío para lanzar uno.</p><p>Ciencia, Tecnología y Sociedad · Tema 3: IA, algoritmos de recomendación y desinformación</p><p>Casco Ariel · Casco Luis · Casco Daniel</p></footer>
 <script src="script.js"></script>
 </body>
 </html>

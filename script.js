@@ -186,4 +186,108 @@
     qb.appendChild(opts); qb.appendChild(fb);
   }
   quiz();
+  /* Fondo animado: propagación de contenido en una red */
+  (function () {
+    var cv = $("bg"), tg = $("bgtoggle");
+    if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext("2d"), W = 0, H = 0, dpr = 1, nodes2 = [], running = !reduce, last = 0, seedT = 0;
+    var dark = window.matchMedia("(prefers-color-scheme: dark)");
+    var BAD = "251,146,60", GOOD = "45,212,191", RANGE = 130;
+    function resize() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.max(30, Math.min(85, Math.floor(W * H / 15000)));
+      nodes2 = [];
+      for (var i = 0; i < n; i++) nodes2.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18, e: 0, k: "" });
+      if (!running) draw();
+    }
+    function seed(kind, x, y) {
+      var best = null, bd = 1e9;
+      nodes2.forEach(function (n) {
+        var d = (n.x - x) * (n.x - x) + (n.y - y) * (n.y - y);
+        if (d < bd) { bd = d; best = n; }
+      });
+      if (best) { best.e = 1; best.k = kind; }
+    }
+    function step(dt) {
+      var i, j, a, b, dx, dy, d;
+      nodes2.forEach(function (n) {
+        n.x += n.vx * dt * 0.06; n.y += n.vy * dt * 0.06;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+      var spread = [];
+      for (i = 0; i < nodes2.length; i++) {
+        a = nodes2[i];
+        if (a.e > 0.5) {
+          for (j = 0; j < nodes2.length; j++) {
+            b = nodes2[j];
+            if (b === a || b.e > 0) continue;
+            dx = a.x - b.x; dy = a.y - b.y;
+            if (dx * dx + dy * dy < RANGE * RANGE && Math.random() < (a.k === "bad" ? 0.09 : 0.03)) spread.push([b, a.k]);
+          }
+        }
+      }
+      spread.forEach(function (s) { if (s[0].e === 0) { s[0].e = 1; s[0].k = s[1]; } });
+      nodes2.forEach(function (n) { if (n.e > 0) { n.e -= dt * (n.k === "bad" ? 0.00045 : 0.0006); if (n.e <= 0) { n.e = 0; n.k = ""; } } });
+      seedT -= dt;
+      if (seedT <= 0) {
+        seed("bad", Math.random() * W, Math.random() * H);
+        seed("good", Math.random() * W, Math.random() * H);
+        seedT = 4500;
+      }
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var line = dark.matches ? "143,165,255" : "43,78,255", i, j, a, b, d, al;
+      ctx.lineWidth = 1;
+      for (i = 0; i < nodes2.length; i++) {
+        a = nodes2[i];
+        for (j = i + 1; j < nodes2.length; j++) {
+          b = nodes2[j];
+          d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (d > RANGE) continue;
+          al = (1 - d / RANGE);
+          var hot = Math.max(a.e, b.e), col = line, alpha = al * 0.14;
+          if (hot > 0.05) { var k = a.e >= b.e ? a.k : b.k; col = k === "bad" ? BAD : GOOD; alpha = al * (0.14 + hot * 0.5); }
+          ctx.strokeStyle = "rgba(" + col + "," + alpha + ")";
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+      nodes2.forEach(function (n) {
+        if (n.e > 0) {
+          var c = n.k === "bad" ? BAD : GOOD;
+          ctx.fillStyle = "rgba(" + c + "," + (0.25 + n.e * 0.6) + ")";
+          ctx.beginPath(); ctx.arc(n.x, n.y, 2.5 + n.e * 4, 0, 6.2832); ctx.fill();
+        } else {
+          ctx.fillStyle = "rgba(" + line + ",.28)";
+          ctx.beginPath(); ctx.arc(n.x, n.y, 2, 0, 6.2832); ctx.fill();
+        }
+      });
+    }
+    function loop(t) {
+      if (!running) return;
+      var dt = Math.min(50, t - last || 16); last = t;
+      step(dt); draw();
+      requestAnimationFrame(loop);
+    }
+    function start() { if (running && !document.hidden) { last = 0; requestAnimationFrame(loop); } }
+    window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) start(); });
+    document.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest("a,button,input,summary,label,details,header")) return;
+      seed("bad", e.clientX, e.clientY);
+    });
+    if (reduce) { tg.style.display = "none"; }
+    tg.addEventListener("click", function () {
+      running = !running;
+      tg.setAttribute("aria-pressed", running ? "false" : "true");
+      tg.textContent = running ? "Pausar fondo" : "Reanudar fondo";
+      if (running) start();
+    });
+    resize(); seed("bad", W * .3, H * .4); seed("good", W * .7, H * .6);
+    if (running) start(); else draw();
+  })();
 })();
